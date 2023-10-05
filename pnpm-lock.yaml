@@ -61,9 +61,6 @@ devDependencies:
   eslint-plugin-typescript-enum:
     specifier: 2.1.0
     version: 2.1.0(eslint@8.48.0)(typescript@5.2.2)
-  eslint-recommended:
-    specifier: link:eslint-plugin-plugin:@typescript-eslint/eslint-recommended
-    version: link:eslint-plugin-plugin:@typescript-eslint/eslint-recommended
   prettier:
     specifier: 3.0.3
     version: 3.0.3
