@@ -11,11 +11,13 @@ const getSchema = z.object({
 class PokeStatsController {
   static async get(req: Request, res: Response): Promise<void> {
     const start = performance.now();
+    let status = 200;
 
     const data = getSchema.safeParse(req.params);
 
     if (!data.success) {
-      res.status(400).send(data.error);
+      status = 400;
+      res.status(status).send(data.error);
       return;
     }
 
@@ -25,16 +27,24 @@ class PokeStatsController {
 
     if (!stats) {
       const end = performance.now();
-      logger.warn({ microservice: 'poke-stats', message: 'Not found', time: end - start });
 
-      res.status(404).send({ message: 'Stat not found' });
+      status = 404;
+
+      logger.warn({ microservice: 'poke-stats', message: 'Not found', time: end - start, status });
+
+      res.status(status).send({ message: 'Stat not found' });
       return;
     }
 
     const end = performance.now();
-    logger.info({ microservice: 'poke-stats', message: 'Read from mongodb', time: end - start });
+    logger.info({
+      microservice: 'poke-stats',
+      message: 'Read from mongodb',
+      time: end - start,
+      status,
+    });
 
-    res.status(200).send({ stats });
+    res.status(status).send({ stats });
   }
 }
 
